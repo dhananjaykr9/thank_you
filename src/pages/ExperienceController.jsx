@@ -259,21 +259,27 @@ export default function ExperienceController() {
     }
   }, [madeWish]);
 
-  // Detect category from Subdomain OR Path
+  // Detect category from Path OR Subdomain
   const getCategory = () => {
-    const hostname = window.location.hostname; // e.g., friends.dhananjaykharkar.tech
-    const parts = hostname.split('.');
+    const validPaths = ['friends', 'family', 'special', 'relatives'];
     
-    // Check subdomain first (if not localhost or direct IP)
+    // 1. Check Path first (e.g., localhost:5173/friends)
+    const pathPart = location.pathname.split('/').filter(Boolean)[0];
+    if (validPaths.includes(pathPart)) {
+      return pathPart;
+    }
+
+    // 2. Check Subdomain (e.g., friends.dhananjaykharkar.tech)
+    const hostname = window.location.hostname;
+    const parts = hostname.split('.');
     if (parts.length > 2) {
       const subdomain = parts[0].toLowerCase();
-      if (['friends', 'family', 'special', 'relatives'].includes(subdomain)) {
+      if (validPaths.includes(subdomain)) {
         return subdomain;
       }
     }
 
-    // Fallback to path (e.g., /friends)
-    return location.pathname.split('/').filter(Boolean)[0] || 'default';
+    return 'default';
   };
 
   const path = getCategory();

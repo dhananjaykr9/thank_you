@@ -79,7 +79,7 @@ export default function LoadingScreen({ onComplete }) {
       onMouseLeave={handleMouseLeave}
     >
       {/* Noise Texture Overlay */}
-      <div className="absolute inset-0 opacity-[0.03] pointer-events-none z-50 bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+      <div className="absolute inset-0 opacity-[0.03] pointer-events-none z-50 bg-[url('https://www.transparenttextures.com/patterns/pinstripe-dark.png')]" />
 
       {/* Enhanced Background Orbs */}
       <motion.div

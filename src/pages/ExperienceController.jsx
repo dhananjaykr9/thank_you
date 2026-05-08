@@ -259,15 +259,14 @@ export default function ExperienceController() {
     }
   }, [madeWish]);
 
-  // Bulletproof Category Detection (Scans entire URL)
+  // Fuzzy Bulletproof Category Detection
   const getCategory = () => {
     const url = window.location.href.toLowerCase();
     
-    // Priority order for detection
-    if (url.includes('/friends') || url.includes('friends.')) return 'friends';
-    if (url.includes('/family') || url.includes('family.')) return 'family';
-    if (url.includes('/special') || url.includes('special.')) return 'special';
-    if (url.includes('/relatives') || url.includes('relatives.')) return 'relatives';
+    if (url.includes('friend')) return 'friends';
+    if (url.includes('fam')) return 'family';
+    if (url.includes('spec')) return 'special';
+    if (url.includes('relat')) return 'relatives';
 
     return 'default';
   };

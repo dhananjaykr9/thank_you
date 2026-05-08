@@ -259,25 +259,15 @@ export default function ExperienceController() {
     }
   }, [madeWish]);
 
-  // Detect category from Path OR Subdomain
+  // Bulletproof Category Detection (Scans entire URL)
   const getCategory = () => {
-    const validPaths = ['friends', 'family', 'special', 'relatives'];
+    const url = window.location.href.toLowerCase();
     
-    // 1. Check Path first (e.g., localhost:5173/friends)
-    const pathPart = location.pathname.split('/').filter(Boolean)[0];
-    if (validPaths.includes(pathPart)) {
-      return pathPart;
-    }
-
-    // 2. Check Subdomain (e.g., friends.dhananjaykharkar.tech)
-    const hostname = window.location.hostname;
-    const parts = hostname.split('.');
-    if (parts.length > 2) {
-      const subdomain = parts[0].toLowerCase();
-      if (validPaths.includes(subdomain)) {
-        return subdomain;
-      }
-    }
+    // Priority order for detection
+    if (url.includes('/friends') || url.includes('friends.')) return 'friends';
+    if (url.includes('/family') || url.includes('family.')) return 'family';
+    if (url.includes('/special') || url.includes('special.')) return 'special';
+    if (url.includes('/relatives') || url.includes('relatives.')) return 'relatives';
 
     return 'default';
   };

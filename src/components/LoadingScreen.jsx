@@ -14,13 +14,13 @@ const DancingEmoji = ({ emoji, index }) => {
       className="absolute select-none pointer-events-none"
       style={{ left: `${x}%`, top: `${y}%`, fontSize: `${size}px` }}
       initial={{ opacity: 0, scale: 0, rotate: -180 }}
-      animate={{ 
+      animate={{
         opacity: [0, 0.8, 0.5, 0.8],
         scale: [0, 1.2, 0.9, 1],
         rotate: [-180, 10, -10, 0],
         y: [0, -15, 5, -10, 0],
       }}
-      transition={{ 
+      transition={{
         delay,
         duration: 2,
         repeat: Infinity,
@@ -39,11 +39,11 @@ const PulseRing = ({ delay, size }) => (
     style={{ width: size, height: size }}
     initial={{ x: "-50%", y: "-50%", scale: 0.8, opacity: 0 }}
     animate={{ x: "-50%", y: "-50%", scale: 1.5, opacity: [0, 0.5, 0] }}
-    transition={{ 
-      delay, 
-      duration: 3, 
-      repeat: Infinity, 
-      ease: "easeInOut" 
+    transition={{
+      delay,
+      duration: 3,
+      repeat: Infinity,
+      ease: "easeInOut"
     }}
   />
 );
@@ -69,7 +69,7 @@ export default function LoadingScreen({ onComplete }) {
   };
 
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 1 }}
       exit={{ opacity: 0, scale: 1.05, filter: "blur(20px)" }}
       transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
@@ -85,8 +85,8 @@ export default function LoadingScreen({ onComplete }) {
       <motion.div
         className="absolute w-[800px] h-[800px] rounded-full opacity-[0.15] blur-[140px]"
         style={{ background: 'radial-gradient(circle, var(--theme-primary), transparent)', left: '-10%', top: '-10%' }}
-        animate={{ 
-          x: [0, 100, -50, 0], 
+        animate={{
+          x: [0, 100, -50, 0],
           y: [0, -50, 100, 0],
           scale: [1, 1.1, 0.9, 1]
         }}
@@ -95,8 +95,8 @@ export default function LoadingScreen({ onComplete }) {
       <motion.div
         className="absolute w-[700px] h-[700px] rounded-full opacity-[0.12] blur-[120px]"
         style={{ background: 'radial-gradient(circle, var(--theme-secondary), transparent)', right: '-10%', bottom: '-10%' }}
-        animate={{ 
-          x: [0, -100, 50, 0], 
+        animate={{
+          x: [0, -100, 50, 0],
           y: [0, 50, -100, 0],
           scale: [1, 0.9, 1.1, 1]
         }}
@@ -112,12 +112,12 @@ export default function LoadingScreen({ onComplete }) {
 
       {/* Center Content */}
       <div className="relative z-10 text-center flex flex-col items-center max-w-5xl px-6">
-        
+
         <div className="relative flex items-center justify-center mb-20 scale-90 md:scale-100 transition-transform">
           <PulseRing delay={0} size={window?.innerWidth > 768 ? 420 : 300} />
           <PulseRing delay={0.5} size={window?.innerWidth > 768 ? 500 : 340} />
           <PulseRing delay={1} size={window?.innerWidth > 768 ? 580 : 380} />
-          
+
           <motion.div
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
@@ -125,9 +125,9 @@ export default function LoadingScreen({ onComplete }) {
             transition={{ type: "spring", stiffness: 100, damping: 20, delay: 0.2 }}
             className="relative z-20 w-48 h-48 md:w-80 md:h-80 rounded-[4rem] border-[8px] border-white p-2 bg-white/40 backdrop-blur-3xl shadow-[0_40px_80px_-15px_rgba(0,0,0,0.15)] overflow-hidden rotate-2"
           >
-            <img 
-              src={pfp} 
-              alt="Thank You" 
+            <img
+              src={pfp}
+              alt="Thank You"
               className="w-full h-full object-cover rounded-[3.5rem]"
               style={{ transform: "translateZ(60px) scale(1.05)" }}
             />
@@ -142,22 +142,22 @@ export default function LoadingScreen({ onComplete }) {
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.5, duration: 0.8 }}
           >
-             <motion.span 
+            <motion.span
               whileHover={{ scale: 1.05 }}
               className="inline-flex items-center py-2 pr-5 pl-4 rounded-full bg-white shadow-lg shadow-purple-500/5 text-[var(--theme-primary)] text-[11px] md:text-sm font-bold tracking-[0.25em] uppercase mb-10 border border-slate-100"
             >
-              <span className="bg-gradient-to-r from-[var(--theme-primary)] to-[var(--theme-secondary)] text-white rounded-full px-3 py-1 mr-3 shadow-md text-[10px]">22nd</span> 
+              <span className="bg-gradient-to-r from-[var(--theme-primary)] to-[var(--theme-secondary)] text-white rounded-full px-3 py-1 mr-3 shadow-md text-[10px]">22nd</span>
               Birthday Note • २०२४
             </motion.span>
 
-            <h1 className="text-5xl md:text-9xl font-black text-slate-900 tracking-tighter leading-[0.85] mb-8">
-              A Personal <br /> 
+            <h1 className="text-5xl md:text-8xl lg:text-9xl font-black text-slate-900 tracking-tighter leading-[1] md:leading-[0.85] mb-8">
+              Dhananjay's <br className="hidden md:block" /> Personal <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-br from-[var(--theme-primary)] via-[var(--theme-secondary)] to-purple-600 animate-gradient-x">आभार.</span>
             </h1>
-            
+
             <p className="text-lg md:text-2xl text-slate-500 font-medium tracking-normal max-w-2xl mx-auto leading-relaxed opacity-90">
               Birthday wishes बद्दल खूप खूप धन्यवाद. <br className="hidden md:block" />
-              Your love made my day complete. I've built this interactive <br className="hidden md:block" /> 3D world just to say thanks.
+              Your love made my day complete.
             </p>
           </motion.div>
 
@@ -168,15 +168,15 @@ export default function LoadingScreen({ onComplete }) {
             transition={{ delay: 1.2, duration: 0.8 }}
             className="pt-12"
           >
-            <button 
+            <button
               onClick={() => {
-                new Audio("https://cdn.freesound.org/previews/320/320655_5260872-lq.mp3").play().catch(() => {});
+                new Audio("https://cdn.freesound.org/previews/320/320655_5260872-lq.mp3").play().catch(() => { });
                 onComplete();
               }}
               className="group relative inline-flex items-center gap-4 text-sm md:text-base font-black text-white uppercase tracking-[0.25em] px-14 py-6 rounded-[2rem] bg-slate-900 shadow-[0_30px_60px_-15px_rgba(15,23,42,0.4)] hover:bg-[var(--theme-primary)] hover:-translate-y-1.5 hover:shadow-[0_40px_80px_-20px_rgba(168,85,247,0.4)] active:translate-y-0 transition-all duration-500 overflow-hidden"
             >
               <span className="relative z-10">Experience the Magic</span>
-              <motion.span 
+              <motion.span
                 className="relative z-10 text-xl"
                 animate={{ rotate: [0, 15, -15, 0], scale: [1, 1.2, 1] }}
                 transition={{ repeat: Infinity, duration: 2 }}
@@ -185,7 +185,7 @@ export default function LoadingScreen({ onComplete }) {
               </motion.span>
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-[shimmer_2s_infinite]" />
             </button>
-            
+
             <p className="mt-8 text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-[0.3em] animate-pulse">
               Scroll to explore • Tap to begin
             </p>

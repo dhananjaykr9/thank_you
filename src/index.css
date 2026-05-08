@@ -19,6 +19,13 @@
     scroll-behavior: smooth;
     overflow-x: hidden;
     position: relative;
+    /* Prevent accidental zoom on double tap on some mobile browsers */
+    touch-action: manipulation;
+  }
+
+  /* Global Marathi Line-Height Fix */
+  h1, h2, h3, p, span {
+    line-height: 1.4;
   }
 
   /* Digital Film Grain Overlay */
@@ -102,6 +109,19 @@
 
   .perspective-2000 {
     perspective: 2000px;
+  }
+
+  /* Mobile Specific Adjustments */
+  @media (max-width: 768px) {
+    .glass-card {
+      backdrop-filter: blur(12px); /* Lighter blur for performance */
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 24px;
+    }
+    
+    .font-handwriting {
+      font-size: 1.1em; /* Slightly larger for readability */
+    }
   }
 }
 

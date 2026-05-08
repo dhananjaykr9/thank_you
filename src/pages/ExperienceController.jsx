@@ -429,205 +429,206 @@ export default function ExperienceController() {
         </div>
       </div>
 
-      <motion.div
+      <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: madeWish ? 1 : 0 }}
-        className={`relative w-full bg-[#fafafa] text-slate-800 font-sans overflow-x-hidden pb-64 selection:bg-[var(--theme-bg-soft)] z-10 ${themeClass}`}
+        className={`relative w-full bg-[#fafafa] text-slate-800 font-sans overflow-x-hidden pb-40 md:pb-64 selection:bg-[var(--theme-bg-soft)] z-10 ${themeClass}`} 
+        style={{ paddingBottom: 'calc(4rem + env(safe-area-inset-bottom))' }}
         ref={screenRef}
       >
-        {/* Noise Texture Overlay */}
-        <div className="absolute inset-0 opacity-[0.02] pointer-events-none z-50 bg-[url('https://www.transparenttextures.com/patterns/pinstripe-dark.png')]" />
+      {/* Noise Texture Overlay */}
+      <div className="absolute inset-0 opacity-[0.02] pointer-events-none z-50 bg-[url('https://www.transparenttextures.com/patterns/pinstripe-dark.png')]" />
+      
+      {/* Dynamic Background Elements */}
+      <div className="fixed inset-0 pointer-events-none opacity-40">
+        <div className="absolute top-[-5%] left-[-10%] w-[50%] h-[40%] rounded-full bg-purple-200/30 blur-[120px]" />
+        <div className="absolute bottom-[-5%] right-[-10%] w-[50%] h-[40%] rounded-full bg-blue-200/30 blur-[120px]" />
+      </div>
 
-        {/* Dynamic Background Elements */}
-        <div className="fixed inset-0 pointer-events-none opacity-40">
-          <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-purple-200/30 blur-[120px]" />
-          <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-blue-200/30 blur-[120px]" />
-        </div>
+      {/* Sticky Progress Bar */}
+      <motion.div 
+        className="fixed top-0 left-0 w-full h-1 bg-gradient-to-r from-[var(--theme-primary)] via-[var(--theme-secondary)] to-purple-600 z-[100] origin-left"
+        style={{ scaleX: scrollYProgress }}
+      />
 
-        {/* Sticky Progress Bar */}
-        <motion.div
-          className="fixed top-0 left-0 w-full h-1.5 bg-gradient-to-r from-[var(--theme-primary)] via-[var(--theme-secondary)] to-purple-600 z-50 origin-left"
-          style={{ scaleX: scrollYProgress }}
-        />
-
-        <div className="max-w-5xl mx-auto px-4 py-24 relative">
-          {/* Intro Header */}
+      <div className="max-w-5xl mx-auto px-4 md:px-6 py-12 md:py-24 relative">
+        {/* Intro Header */}
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+          className="text-center mb-24 md:mb-64 pt-8 md:pt-24"
+        >
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-            className="text-center mb-40 md:mb-56 px-4 pt-12 md:pt-24"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.2, ease: "easeOut" }}
+            className="mb-8 md:mb-12"
           >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1.2, ease: "easeOut" }}
-              className="mb-12"
+            <motion.span 
+              whileHover={{ scale: 1.05 }}
+              className="inline-flex items-center py-2 pr-5 md:pr-6 pl-4 md:pl-5 rounded-full bg-white shadow-xl shadow-purple-500/5 text-[var(--theme-primary)] text-[10px] md:text-sm font-bold tracking-[0.2em] md:tracking-[0.25em] uppercase mb-8 md:mb-12 border border-slate-100"
             >
-              <motion.span
-                whileHover={{ scale: 1.05 }}
-                className="inline-flex items-center py-2 pr-6 pl-5 rounded-full bg-white shadow-xl shadow-purple-500/5 text-[var(--theme-primary)] text-[11px] md:text-sm font-bold tracking-[0.25em] uppercase mb-12 border border-slate-100"
-              >
-                <span className="bg-gradient-to-r from-[var(--theme-primary)] to-[var(--theme-secondary)] text-white rounded-full px-3 py-1 mr-4 shadow-md text-[10px]">
-                  {categoryParams.badge}
-                </span>
-                Note • Est. 2004
-              </motion.span>
+              <span className="bg-gradient-to-r from-[var(--theme-primary)] to-[var(--theme-secondary)] text-white rounded-full px-2.5 py-0.5 md:px-3 md:py-1 mr-3 md:mr-4 shadow-md text-[9px] md:text-[10px]">
+                {categoryParams.badge}
+              </span> 
+              Note • Est. 2004
+            </motion.span>
 
-              <TypewriterText
-                text="Dhananjay's Thank You Note."
-                speed={0.03}
-                delay={0.5}
-                animateImmediately={true}
-                className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter text-slate-900 mb-12 leading-[0.85] md:leading-[0.85] drop-shadow-sm relative z-10 break-words"
-              />
-
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.8, duration: 0.8 }}
-                className="flex flex-col items-center gap-6"
-              >
-                <div className="flex items-center gap-6 w-full max-w-sm justify-center">
-                  <div className="h-px flex-1 bg-gradient-to-r from-transparent via-[var(--theme-line)] to-transparent" />
-                  <span className="text-xs md:text-sm font-bold tracking-[0.4em] text-[var(--theme-primary)] uppercase opacity-80">
-                    Chapter 22
-                  </span>
-                  <div className="h-px flex-1 bg-gradient-to-l from-transparent via-[var(--theme-line)] to-transparent" />
-                </div>
-                <p className="text-2xl md:text-4xl text-slate-400 font-medium italic opacity-80 font-handwriting mt-4 leading-relaxed">
-                  (हे थोडं जास्त personal आहे...)
-                </p>
-              </motion.div>
-            </motion.div>
-          </motion.div>
-
-          {/* 3D Wish Tree & Ledger Section */}
-          <div className="mb-48 md:mb-64 relative">
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-50/30 to-transparent -z-10 blur-3xl rounded-full" />
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.8 }}
-              className="w-full max-w-7xl mx-auto flex flex-col lg:flex-row items-center lg:items-stretch gap-12 relative z-20 px-4"
-            >
-              {/* Form Side */}
-              <div className="w-full lg:w-[35%] flex flex-col justify-center">
-                <form onSubmit={handleJoinTree} className="w-full text-left bg-white/70 backdrop-blur-3xl p-8 md:p-10 rounded-[3rem] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.1)] border border-white group transition-all duration-500 hover:shadow-[0_60px_120px_-25px_rgba(168,85,247,0.15)]">
-                  <h3 className="text-2xl md:text-3xl font-black text-slate-900 mb-2">Guest Ledger</h3>
-                  <p className="text-sm text-slate-400 mb-10 font-bold uppercase tracking-wider">(तुझं नाव इथे लिहून आठवण साठवून ठेव)</p>
-
-                  <div className="flex flex-col w-full gap-6 relative">
-                    <div className="space-y-2">
-                      <label className="text-[11px] font-black uppercase tracking-[0.2em] text-slate-400 ml-3">Your Name</label>
-                      <input
-                        type="text"
-                        value={nameInput}
-                        onChange={(e) => setNameInput(e.target.value)}
-                        placeholder="Enter your name..."
-                        required
-                        className="w-full bg-slate-50/50 border-2 border-slate-100 rounded-[1.5rem] py-5 px-6 focus:outline-none focus:border-[var(--theme-primary)] focus:bg-white text-slate-900 placeholder:text-slate-300 shadow-sm transition-all font-bold text-lg"
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <label className="text-[11px] font-black uppercase tracking-[0.2em] text-slate-400 ml-3">Short Wish (Optional)</label>
-                      <textarea
-                        value={messageInput}
-                        onChange={(e) => setMessageInput(e.target.value)}
-                        placeholder="Leave a message..."
-                        className="w-full bg-slate-50/50 border-2 border-slate-100 rounded-[1.5rem] py-5 px-6 focus:outline-none focus:border-[var(--theme-primary)] focus:bg-white text-slate-900 placeholder:text-slate-300 shadow-sm resize-none h-40 transition-all font-handwriting text-2xl"
-                      />
-                    </div>
-
-                    <button
-                      type="submit"
-                      disabled={isSubmitting}
-                      className="w-full bg-slate-900 text-white py-5 px-8 rounded-[1.5rem] text-lg font-black shadow-2xl hover:bg-[var(--theme-primary)] hover:-translate-y-2 active:translate-y-0 transition-all duration-300 disabled:opacity-50 mt-6 overflow-hidden relative group"
-                    >
-                      <span className="relative z-10">{isSubmitting ? 'Signing...' : 'Sign & Hang on Tree'}</span>
-                      <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity" />
-                    </button>
-                  </div>
-                </form>
-              </div>
-
-              {/* Tree Side */}
-              <div className="w-full lg:w-[65%] h-[500px] md:h-[600px] lg:h-[800px] relative">
-                <div className="absolute inset-0 bg-white/40 backdrop-blur-xl rounded-[4rem] border border-white shadow-2xl overflow-hidden">
-                  <WishTree refreshTrigger={refreshKey} />
-                </div>
-              </div>
-            </motion.div>
-          </div>
-
-          {/* Fun Facts Section */}
-          <LifeStats path={path} />
-
-          {/* The Timeline Foundation */}
-          <div className="relative w-full pb-48">
-            <div className="absolute left-6 md:left-1/2 top-4 bottom-0 w-1.5 bg-slate-100 transform -translate-x-1/2 rounded-full" />
-            <motion.div
-              className="absolute left-6 md:left-1/2 top-4 bottom-0 w-1.5 bg-gradient-to-b from-[var(--theme-primary)] via-[var(--theme-secondary)] to-purple-600 transform -translate-x-1/2 rounded-full origin-top"
-              style={{ scaleY }}
+            <TypewriterText 
+              text="Dhananjay's Thank You Note."
+              speed={0.03}
+              delay={0.5}
+              animateImmediately={true}
+              className="text-4xl sm:text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter text-slate-900 mb-8 md:mb-16 leading-[1.1] md:leading-[1.1] drop-shadow-sm relative z-10 break-words max-w-5xl mx-auto"
             />
 
-            <div className="space-y-24 md:space-y-32">
-              {categoryParams.timeline.map((item, idx) => (
-                <TimelineNode
-                  key={idx}
-                  isLeft={idx % 2 === 0}
-                  delay={0.2}
-                  title={item.title}
-                  text={item.text}
-                />
-              ))}
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.8, duration: 0.8 }}
+            className="flex flex-col items-center gap-4"
+          >
+            <div className="flex items-center gap-4 md:gap-6 w-full max-w-sm justify-center">
+              <div className="h-px flex-1 bg-gradient-to-r from-transparent via-[var(--theme-line)] to-transparent" />
+              <span className="text-[10px] md:text-sm font-bold tracking-[0.3em] md:tracking-[0.4em] text-[var(--theme-primary)] uppercase opacity-80">
+                Chapter 22
+              </span>
+              <div className="h-px flex-1 bg-gradient-to-l from-transparent via-[var(--theme-line)] to-transparent" />
             </div>
-          </div>
+            <p className="text-xl sm:text-3xl md:text-5xl text-slate-400 font-medium italic opacity-80 font-handwriting mt-2 md:mt-4 leading-relaxed px-4">
+              (हे थोडं जास्त personal आहे...)
+            </p>
+          </motion.div>
+          </motion.div>
+        </motion.div>
 
-          {/* Handwritten Letter Section - Unique Addition */}
-          <HandwrittenLetter
+        {/* 3D Wish Tree & Ledger Section */}
+        <div className="mb-32 md:mb-64 relative">
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-50/20 to-transparent -z-10 blur-3xl rounded-full" />
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.8 }}
+            className="w-full max-w-7xl mx-auto flex flex-col lg:flex-row items-center lg:items-stretch gap-8 md:gap-12 relative z-20"
+          >
+            {/* Form Side */}
+            <div className="w-full lg:w-[35%] flex flex-col justify-center order-2 lg:order-1">
+              <form onSubmit={handleJoinTree} className="w-full text-left bg-white/70 backdrop-blur-3xl p-6 md:p-10 rounded-[2.5rem] md:rounded-[3rem] shadow-[0_40px_80px_-20px_rgba(0,0,0,0.08)] border border-white group transition-all duration-500">
+                <h3 className="text-xl md:text-3xl font-black text-slate-900 mb-1 md:mb-2">Guest Ledger</h3>
+                <p className="text-[10px] md:text-sm text-slate-400 mb-6 md:mb-10 font-bold uppercase tracking-wider">(तुझं नाव इथे लिहून आठवण साठवून ठेव)</p>
+                
+                <div className="flex flex-col w-full gap-4 md:gap-6 relative">
+                  <div className="space-y-1.5 md:space-y-2">
+                    <label className="text-[10px] md:text-[11px] font-black uppercase tracking-[0.2em] text-slate-400 ml-2 md:ml-3">Your Name</label>
+                    <input 
+                      type="text" 
+                      value={nameInput}
+                      onChange={(e) => setNameInput(e.target.value)}
+                      placeholder="Name..." 
+                      required
+                      className="w-full bg-slate-50/50 border-2 border-slate-100 rounded-[1.2rem] md:rounded-[1.5rem] py-4 md:py-5 px-5 md:px-6 focus:outline-none focus:border-[var(--theme-primary)] focus:bg-white text-slate-900 placeholder:text-slate-300 transition-all font-bold text-base md:text-lg"
+                    />
+                  </div>
+                  
+                  <div className="space-y-1.5 md:space-y-2">
+                    <label className="text-[10px] md:text-[11px] font-black uppercase tracking-[0.2em] text-slate-400 ml-2 md:ml-3">Wish (Optional)</label>
+                    <textarea
+                      value={messageInput}
+                      onChange={(e) => setMessageInput(e.target.value)}
+                      placeholder="Message..."
+                      className="w-full bg-slate-50/50 border-2 border-slate-100 rounded-[1.2rem] md:rounded-[1.5rem] py-4 md:py-5 px-5 md:px-6 focus:outline-none focus:border-[var(--theme-primary)] focus:bg-white text-slate-900 placeholder:text-slate-300 resize-none h-32 md:h-40 transition-all font-handwriting text-xl md:text-2xl"
+                    />
+                  </div>
+
+                  <button 
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full bg-slate-900 text-white py-4 md:py-5 px-6 md:px-8 rounded-[1.2rem] md:rounded-[1.5rem] text-base md:text-lg font-black shadow-2xl hover:bg-[var(--theme-primary)] hover:-translate-y-1.5 active:translate-y-0 transition-all duration-300 disabled:opacity-50 mt-4 md:mt-6 overflow-hidden relative group"
+                  >
+                    <span className="relative z-10">{isSubmitting ? 'Signing...' : 'Sign & Hang'}</span>
+                    <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            {/* Tree Side */}
+            <div className="w-full lg:w-[65%] h-[350px] md:h-[600px] lg:h-[800px] relative order-1 lg:order-2">
+              <div className="absolute inset-0 bg-white/30 backdrop-blur-xl rounded-[2.5rem] md:rounded-[4rem] border border-white shadow-xl overflow-hidden">
+                <WishTree refreshTrigger={refreshKey} />
+              </div>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Fun Facts Section */}
+        <LifeStats path={path} />
+
+        {/* The Timeline Foundation */}
+        <div className="relative w-full pb-24 md:pb-48 px-2 md:px-0">
+          <div className="absolute left-6 md:left-1/2 top-4 bottom-0 w-1 md:w-1.5 bg-slate-100 transform -translate-x-1/2 rounded-full" />
+          <motion.div 
+            className="absolute left-6 md:left-1/2 top-4 bottom-0 w-1 md:w-1.5 bg-gradient-to-b from-[var(--theme-primary)] via-[var(--theme-secondary)] to-purple-600 transform -translate-x-1/2 rounded-full origin-top"
+            style={{ scaleY }}
+          />
+
+          <div className="space-y-16 md:space-y-32">
+            {categoryParams.timeline.map((item, idx) => (
+              <TimelineNode 
+                key={idx} 
+                isLeft={idx % 2 === 0} 
+                delay={0.2}
+                title={item.title}
+                text={item.text}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Handwritten Letter Section */}
+        <div className="px-4 md:px-0">
+          <HandwrittenLetter 
             text={categoryParams.timeline[0].text}
             sub={categoryParams.timeline[categoryParams.timeline.length - 1].sub}
           />
-
-          {/* Conclusion Card */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "0px 0px -200px 0px" }}
-            onViewportEnter={() => {
-              confetti({
-                particleCount: 150,
-                spread: 100,
-                origin: { y: 0.8 },
-                colors: ['#A855F7', '#EC4899', '#3B82F6', '#F59E0B']
-              });
-            }}
-            transition={{ duration: 0.8 }}
-            className="mt-24 flex flex-col items-center bg-white/80 backdrop-blur-3xl rounded-[4rem] p-10 md:p-16 shadow-[0_60px_120px_-30px_rgba(0,0,0,0.15)] border-4 border-white text-center relative overflow-hidden"
-          >
-            <div className="absolute top-0 left-1/2 w-1.5 h-16 bg-gradient-to-b from-[var(--theme-primary)] to-transparent transform -translate-x-1/2 hidden md:block" />
-
-            <p className="text-[11px] md:text-sm font-black tracking-[0.4em] text-[var(--theme-primary)] uppercase mb-6 mt-4 md:mt-0 opacity-70">
-              {greeting}
-            </p>
-
-            <h1 className="text-3xl sm:text-4xl md:text-6xl font-black text-slate-900 tracking-tight leading-snug md:leading-tight mb-12 bg-clip-text text-transparent bg-gradient-to-br from-slate-900 to-[var(--theme-secondary)] max-w-3xl">
-              Having you in my life, <br className="hidden sm:block" />
-              हीच माझ्यासाठी real gift आहे.
-            </h1>
-
-            <HandwrittenSignature />
-
-            <div className="w-full h-px bg-slate-100 my-12 max-w-md" />
-
-            {/* New voice recording will go here */}
-            {/* <div className="w-full max-w-md flex flex-col items-center justify-center scale-110">
-            <AudioPlayer src={voiceClip} autoPlay={madeWish} />
-          </div> */}
-          </motion.div>
         </div>
+
+        {/* Conclusion Card */}
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "0px 0px -200px 0px" }}
+          onViewportEnter={() => {
+            confetti({
+              particleCount: 150,
+              spread: 100,
+              origin: { y: 0.8 },
+              colors: ['#A855F7', '#EC4899', '#3B82F6', '#F59E0B']
+            });
+          }}
+          transition={{ duration: 0.8 }}
+          className="mt-24 flex flex-col items-center bg-white/80 backdrop-blur-3xl rounded-[4rem] p-10 md:p-16 shadow-[0_60px_120px_-30px_rgba(0,0,0,0.15)] border-4 border-white text-center relative overflow-hidden"
+        >
+          <div className="absolute top-0 left-1/2 w-1.5 h-16 bg-gradient-to-b from-[var(--theme-primary)] to-transparent transform -translate-x-1/2 hidden md:block" />
+
+          <p className="text-[11px] md:text-sm font-black tracking-[0.4em] text-[var(--theme-primary)] uppercase mb-6 mt-4 md:mt-0 opacity-70">
+            {greeting}
+          </p>
+
+          <h1 className="text-3xl sm:text-4xl md:text-6xl font-black text-slate-900 tracking-tight leading-snug md:leading-tight mb-12 bg-clip-text text-transparent bg-gradient-to-br from-slate-900 to-[var(--theme-secondary)] max-w-3xl">
+            Having you in my life, <br className="hidden sm:block" />
+            हीच माझ्यासाठी real gift आहे.
+          </h1>
+
+          <HandwrittenSignature />
+
+          <div className="w-full h-px bg-slate-100 my-12 max-w-md" />
+
+          {/* New voice recording placeholder */}
+        </motion.div>
+      </div>
+
       {/* Background Ambient Audio */}
       <AmbientAudio src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3" />
     </motion.div>

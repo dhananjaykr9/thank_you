@@ -10,6 +10,8 @@ const ResponsiveCamera = ({ hoveredPos }) => {
   const targetPos = useRef(new THREE.Vector3(0, 1.5, 8));
   const currentPos = useRef(new THREE.Vector3(0, 1.5, 8));
   
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+
   useEffect(() => {
     if (size.width < 640) {
       camera.fov = 50;
@@ -28,12 +30,14 @@ const ResponsiveCamera = ({ hoveredPos }) => {
       zoomTarget.z += 3; // Stay 3 units away from the tag
       zoomTarget.y += 0.5;
       currentPos.current.lerp(zoomTarget, 0.05);
-    } else {
-      // Otherwise subtle mouse follow
+    } else if (!isMobile) {
+      // Otherwise subtle mouse follow (only on desktop)
       const parallaxX = mouse.x * 1;
       const parallaxY = mouse.y * 1;
       const idleTarget = targetPos.current.clone().add(new THREE.Vector3(parallaxX, parallaxY, 0));
       currentPos.current.lerp(idleTarget, 0.05);
+    } else {
+      currentPos.current.lerp(targetPos.current, 0.05);
     }
     
     camera.position.copy(currentPos.current);
@@ -43,14 +47,14 @@ const ResponsiveCamera = ({ hoveredPos }) => {
   return null;
 };
 
-const WisherTag = ({ wisher, position, index, onHover }) => {
+const WisherTag = ({ wisher, position, index, onHover, isMobile }) => {
   const [hovered, setHovered] = useState(false);
   
   return (
     <Float 
-      speed={2 + (index % 2)} 
-      rotationIntensity={hovered ? 1 : 0.5} 
-      floatIntensity={hovered ? 1 : 0.5} 
+      speed={isMobile ? 0 : 2 + (index % 2)} 
+      rotationIntensity={isMobile ? 0 : (hovered ? 1 : 0.5)} 
+      floatIntensity={isMobile ? 0 : (hovered ? 1 : 0.5)} 
       position={position}
     >
       <mesh position={[0, 0.4, 0]}>
@@ -127,9 +131,10 @@ const Branch = ({ start, end, thickness, color }) => {
 const Tree = ({ wishers }) => {
   const group = useRef();
   const [hoveredPos, setHoveredPos] = useState(null);
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
   
   useFrame((state) => {
-    if (group.current) {
+    if (group.current && !isMobile) {
       group.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.2) * 0.1;
     }
   });
@@ -186,6 +191,7 @@ const Tree = ({ wishers }) => {
               position={tagPos} 
               index={i} 
               onHover={setHoveredPos}
+              isMobile={isMobile}
             />
           );
         })}

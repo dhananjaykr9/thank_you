@@ -63,7 +63,13 @@ const HandwrittenLetter = ({ text, sub }) => {
   const rotateX = useSpring(useTransform(y, [-100, 100], [10, -10]), { stiffness: 100, damping: 10 });
   const rotateY = useSpring(useTransform(x, [-100, 100], [-10, 10]), { stiffness: 100, damping: 10 });
 
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 768);
+  }, []);
+
   const handleMouseMove = (event) => {
+    if (isMobile) return;
     const rect = event.currentTarget.getBoundingClientRect();
     const offsetX = event.clientX - rect.left - rect.width / 2;
     const offsetY = event.clientY - rect.top - rect.height / 2;
@@ -72,6 +78,7 @@ const HandwrittenLetter = ({ text, sub }) => {
   };
 
   const handleMouseLeave = () => {
+    if (isMobile) return;
     x.set(0);
     y.set(0);
   };
@@ -98,24 +105,24 @@ const HandwrittenLetter = ({ text, sub }) => {
         onMouseEnter={playRustle}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
-        className="letter-paper p-8 md:p-12 min-h-[400px] flex flex-col justify-between origin-bottom shadow-[0_50px_100px_rgba(0,0,0,0.15)] relative transition-shadow hover:shadow-[0_60px_120px_rgba(0,0,0,0.2)]"
-        style={{ transformStyle: 'preserve-3d', rotateX, rotateY }}
+        className="letter-paper p-6 sm:p-8 md:p-12 min-h-[350px] md:min-h-[400px] flex flex-col justify-between origin-bottom shadow-[0_50px_100px_rgba(0,0,0,0.15)] relative transition-shadow hover:shadow-[0_60px_120px_rgba(0,0,0,0.2)]"
+        style={isMobile ? {} : { transformStyle: 'preserve-3d', rotateX, rotateY }}
       >
         {/* Paper crease effect */}
         <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-white/20 to-transparent pointer-events-none rounded-sm" />
 
-        <div className="space-y-6 relative" style={{ transform: "translateZ(40px)" }}>
+        <div className="space-y-4 md:space-y-6 relative" style={{ transform: "translateZ(40px)" }}>
           <TypewriterText
             text={text}
             speed={0.03}
             delay={1}
-            className="font-handwriting text-2xl md:text-3xl text-slate-800 leading-relaxed drop-shadow-sm"
+            className="font-handwriting text-xl sm:text-2xl md:text-3xl text-slate-800 leading-relaxed drop-shadow-sm"
           />
           <TypewriterText
             text={sub}
             speed={0.05}
             delay={3}
-            className="font-handwriting text-xl md:text-2xl text-[var(--theme-primary)] italic mt-4 block"
+            className="font-handwriting text-lg sm:text-xl md:text-2xl text-[var(--theme-primary)] italic mt-4 block"
           />
         </div>
 
@@ -145,7 +152,13 @@ const TimelineNode = ({ title, text, isLeft, delay = 0 }) => {
   const rotateX = useTransform(y, [-100, 100], [10, -10]);
   const rotateY = useTransform(x, [-100, 100], [-10, 10]);
 
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 768);
+  }, []);
+
   const handleMouseMove = (event) => {
+    if (isMobile) return;
     const rect = event.currentTarget.getBoundingClientRect();
     const offsetX = event.clientX - rect.left - rect.width / 2;
     const offsetY = event.clientY - rect.top - rect.height / 2;
@@ -154,6 +167,7 @@ const TimelineNode = ({ title, text, isLeft, delay = 0 }) => {
   };
 
   const handleMouseLeave = () => {
+    if (isMobile) return;
     x.set(0);
     y.set(0);
   };
@@ -169,18 +183,18 @@ const TimelineNode = ({ title, text, isLeft, delay = 0 }) => {
       />
       <div className={`hidden md:block w-5/12 ${isLeft ? '' : 'order-first'}`} />
       <motion.div
-        initial={{ opacity: 0, y: 40, scale: 0.95, rotateX: 15 }}
+        initial={{ opacity: 0, y: 40, scale: 0.95, rotateX: isMobile ? 0 : 15 }}
         whileInView={{ opacity: 1, y: 0, scale: 1, rotateX: 0 }}
         viewport={{ once: true, margin: "-10%" }}
         transition={{ duration: 0.8, delay, type: 'spring', bounce: 0.2 }}
-        style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+        style={isMobile ? {} : { rotateX, rotateY, transformStyle: "preserve-3d" }}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
-        className={`w-full md:w-5/12 pl-12 md:pl-0 z-20 ${isLeft ? 'md:pr-10 md:text-right text-left' : 'md:pl-10 text-left'}`}
+        className={`w-full md:w-5/12 pl-14 pr-2 md:px-0 z-20 ${isLeft ? 'md:pr-10 md:text-right text-left' : 'md:pl-10 text-left'}`}
       >
-        <div className="glass-card p-6 md:p-8 hover:shadow-2xl transition-shadow border-[var(--theme-line)]" style={{ transform: "translateZ(30px)" }}>
-          <h3 className="text-xl md:text-2xl font-black mb-3 text-[var(--theme-primary)]">{title}</h3>
-          <TypewriterText text={text} speed={0.02} delay={delay + 0.3} className="text-sm md:text-base text-slate-800 font-medium leading-relaxed" />
+        <div className="glass-card p-5 md:p-8 hover:shadow-2xl transition-shadow border-[var(--theme-line)]" style={{ transform: "translateZ(30px)" }}>
+          <h3 className="text-lg md:text-2xl font-black mb-2 md:mb-3 text-[var(--theme-primary)] leading-tight">{title}</h3>
+          <TypewriterText text={text} speed={0.02} delay={delay + 0.3} className="text-[13px] md:text-base text-slate-800 font-medium leading-relaxed" />
         </div>
       </motion.div>
     </div>
@@ -223,14 +237,14 @@ const LifeStats = ({ path }) => {
           viewport={{ once: true }}
           transition={{ delay: i * 0.1, duration: 0.5 }}
           whileHover={{ y: -5, scale: 1.02 }}
-          className="glass-card p-6 flex flex-col items-center text-center group"
+          className="glass-card p-4 sm:p-6 flex flex-col items-center text-center group"
         >
-          <div className="mb-4 p-3 rounded-2xl bg-white/50 group-hover:bg-white transition-colors shadow-sm">
+          <div className="mb-3 md:mb-4 p-2 md:p-3 rounded-2xl bg-white/50 group-hover:bg-white transition-colors shadow-sm">
             {stat.icon}
           </div>
-          <p className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-1">{stat.label}</p>
-          <h4 className="text-xl font-black text-slate-800 mb-1">{stat.value}</h4>
-          <p className="text-[10px] font-medium text-[var(--theme-primary)] opacity-70 uppercase tracking-tight">{stat.sub}</p>
+          <p className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-slate-400 mb-1">{stat.label}</p>
+          <h4 className="text-lg md:text-xl font-black text-slate-800 mb-1 leading-tight">{stat.value}</h4>
+          <p className="text-[9px] md:text-[10px] font-medium text-[var(--theme-primary)] opacity-70 uppercase tracking-tight leading-tight">{stat.sub}</p>
         </motion.div>
       ))}
     </div>
@@ -513,7 +527,7 @@ export default function ExperienceController() {
             className="w-full max-w-7xl mx-auto flex flex-col lg:flex-row items-center lg:items-stretch gap-8 md:gap-12 relative z-20"
           >
             {/* Form Side */}
-            <div className="w-full lg:w-[35%] flex flex-col justify-center order-2 lg:order-1">
+            <div className="w-full lg:w-[35%] flex flex-col justify-center order-1">
               <form onSubmit={handleJoinTree} className="w-full text-left bg-white/70 backdrop-blur-3xl p-6 md:p-10 rounded-[2.5rem] md:rounded-[3rem] shadow-[0_40px_80px_-20px_rgba(0,0,0,0.08)] border border-white group transition-all duration-500">
                 <h3 className="text-xl md:text-3xl font-black text-slate-900 mb-1 md:mb-2">Guest Ledger</h3>
                 <p className="text-[10px] md:text-sm text-slate-400 mb-6 md:mb-10 font-bold uppercase tracking-wider">(तुझं नाव इथे लिहून आठवण साठवून ठेव)</p>
@@ -554,7 +568,7 @@ export default function ExperienceController() {
             </div>
 
             {/* Tree Side */}
-            <div className="w-full lg:w-[65%] h-[350px] md:h-[600px] lg:h-[800px] relative order-1 lg:order-2">
+            <div className="w-full lg:w-[65%] h-[350px] md:h-[600px] lg:h-[800px] relative order-2">
               <div className="absolute inset-0 bg-white/30 backdrop-blur-xl rounded-[2.5rem] md:rounded-[4rem] border border-white shadow-xl overflow-hidden">
                 <WishTree refreshTrigger={refreshKey} />
               </div>
@@ -608,7 +622,7 @@ export default function ExperienceController() {
             });
           }}
           transition={{ duration: 0.8 }}
-          className="mt-24 flex flex-col items-center bg-white/80 backdrop-blur-3xl rounded-[4rem] p-10 md:p-16 shadow-[0_60px_120px_-30px_rgba(0,0,0,0.15)] border-4 border-white text-center relative overflow-hidden"
+          className="mt-16 md:mt-24 flex flex-col items-center bg-white/80 backdrop-blur-3xl rounded-[3rem] md:rounded-[4rem] p-8 sm:p-10 md:p-16 shadow-[0_60px_120px_-30px_rgba(0,0,0,0.15)] border-4 border-white text-center relative overflow-hidden"
         >
           <div className="absolute top-0 left-1/2 w-1.5 h-16 bg-gradient-to-b from-[var(--theme-primary)] to-transparent transform -translate-x-1/2 hidden md:block" />
 

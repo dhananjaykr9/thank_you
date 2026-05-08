@@ -1,0 +1,135 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Default Purple Theme */
+    --theme-primary: #a855f7; /* purple-500 */
+    --theme-secondary: #ec4899; /* pink-500 */
+    --theme-bg-soft: #f5f3ff; /* purple-50 */
+    --theme-line: #ddd6fe; /* purple-200 */
+  }
+
+  body {
+    background-color: #f8fafc;
+    color: #0f172a;
+    font-family: 'Poppins', 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* Digital Film Grain Overlay */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: -100%;
+    width: 300%;
+    height: 300%;
+    background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+    opacity: 0.05;
+    pointer-events: none;
+    z-index: 100;
+    animation: noise 8s steps(10) infinite;
+  }
+
+  @keyframes noise {
+    0% { transform: translate(0, 0); }
+    10% { transform: translate(-5%, -5%); }
+    20% { transform: translate(-10%, 5%); }
+    30% { transform: translate(5%, -10%); }
+    40% { transform: translate(-5%, 15%); }
+    50% { transform: translate(-10%, 5%); }
+    60% { transform: translate(15%, 0); }
+    70% { transform: translate(0, 10%); }
+    80% { transform: translate(-15%, 0); }
+    90% { transform: translate(10%, 5%); }
+    100% { transform: translate(5%, 0); }
+  }
+}
+
+@layer utilities {
+  .glass-card {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.1) 100%);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 
+      0 8px 32px 0 rgba(31, 38, 135, 0.07),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+    border-radius: 32px;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .glass-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 32px;
+    padding: 1px;
+    background: linear-gradient(to bottom right, rgba(255,255,255,0.8), rgba(255,255,255,0.1));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  .font-handwriting {
+    font-family: 'Caveat', cursive;
+  }
+
+  .letter-paper {
+    background-color: #fffef5; /* aged paper color */
+    background-image: linear-gradient(#e1d9d1 1px, transparent 1px);
+    background-size: 100% 2.2rem;
+    box-shadow: 2px 4px 15px rgba(0,0,0,0.08), 0 0 40px rgba(0,0,0,0.02) inset;
+    position: relative;
+    border-radius: 4px;
+  }
+
+  /* Deckled edge effect */
+  .letter-paper::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    border: 1px solid rgba(0,0,0,0.05);
+    filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.1));
+  }
+
+  .perspective-2000 {
+    perspective: 2000px;
+  }
+}
+
+/* Theme classes for dynamic application */
+.theme-friends {
+  --theme-primary: #6366f1; /* indigo-500 */
+  --theme-secondary: #06b6d4; /* cyan-500 */
+  --theme-bg-soft: #eef2ff;
+  --theme-line: #c7d2fe;
+}
+
+.theme-family {
+  --theme-primary: #f59e0b; /* amber-500 */
+  --theme-secondary: #ea580c; /* orange-600 */
+  --theme-bg-soft: #fffbeb;
+  --theme-line: #fde68a;
+}
+
+.theme-special {
+  --theme-primary: #f43f5e; /* rose-500 */
+  --theme-secondary: #d946ef; /* fuchsia-500 */
+  --theme-bg-soft: #fff1f2;
+  --theme-line: #fecdd3;
+}
+
+.theme-relatives {
+  --theme-primary: #3b82f6; /* blue-500 */
+  --theme-secondary: #64748b; /* slate-500 */
+  --theme-bg-soft: #eff6ff;
+  --theme-line: #bfdbfe;
+}

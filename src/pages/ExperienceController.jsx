@@ -421,22 +421,31 @@ export default function ExperienceController() {
     <motion.div 
       initial={{ opacity: 0 }}
       animate={{ opacity: madeWish ? 1 : 0 }}
-      className={`relative w-full bg-slate-50/40 backdrop-blur-[2px] text-slate-800 font-sans overflow-x-hidden pb-64 selection:bg-[var(--theme-bg-soft)] z-10 ${themeClass}`} 
+      className={`relative w-full bg-[#fafafa] text-slate-800 font-sans overflow-x-hidden pb-64 selection:bg-[var(--theme-bg-soft)] z-10 ${themeClass}`} 
       ref={screenRef}
     >
+      {/* Noise Texture Overlay */}
+      <div className="absolute inset-0 opacity-[0.02] pointer-events-none z-50 bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+      
+      {/* Dynamic Background Elements */}
+      <div className="fixed inset-0 pointer-events-none opacity-40">
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-purple-200/30 blur-[120px]" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-blue-200/30 blur-[120px]" />
+      </div>
+
       {/* Sticky Progress Bar */}
       <motion.div 
-        className="fixed top-0 left-0 w-full h-1.5 bg-gradient-to-r from-[var(--theme-primary)] to-[var(--theme-secondary)] z-50 origin-left"
+        className="fixed top-0 left-0 w-full h-1.5 bg-gradient-to-r from-[var(--theme-primary)] via-[var(--theme-secondary)] to-purple-600 z-50 origin-left"
         style={{ scaleX: scrollYProgress }}
       />
 
-      <div className="max-w-4xl mx-auto px-4 py-20 relative">
+      <div className="max-w-5xl mx-auto px-4 py-24 relative">
         {/* Intro Header */}
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-          className="text-center mb-40 md:mb-56 px-4 pt-12 md:pt-24"
+          className="text-center mb-48 md:mb-64 px-4 pt-12 md:pt-24"
         >
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
@@ -445,12 +454,10 @@ export default function ExperienceController() {
             className="mb-12"
           >
             <motion.span 
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 0.6 }}
-              className="inline-flex items-center py-1.5 pr-5 pl-4 rounded-full bg-[var(--theme-bg-soft)] text-[var(--theme-primary)] text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase mb-10 shadow-sm border border-[var(--theme-line)]"
+              whileHover={{ scale: 1.05 }}
+              className="inline-flex items-center py-2 pr-6 pl-5 rounded-full bg-white shadow-xl shadow-purple-500/5 text-[var(--theme-primary)] text-[11px] md:text-sm font-bold tracking-[0.25em] uppercase mb-12 border border-slate-100"
             >
-              <span className="bg-white rounded-full px-2.5 py-0.5 mr-3 shadow-sm text-slate-800 border border-[var(--theme-line)]">
+              <span className="bg-gradient-to-r from-[var(--theme-primary)] to-[var(--theme-secondary)] text-white rounded-full px-3 py-1 mr-4 shadow-md text-[10px]">
                 {categoryParams.badge}
               </span> 
               Note • Est. 2004
@@ -461,23 +468,23 @@ export default function ExperienceController() {
               speed={0.03}
               delay={0.5}
               animateImmediately={true}
-              className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black tracking-tight text-slate-900 mb-10 leading-[1.1] md:leading-[1.05] drop-shadow-md relative z-10 break-words"
+              className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter text-slate-900 mb-12 leading-[0.85] md:leading-[0.85] drop-shadow-sm relative z-10 break-words"
             />
 
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.8, duration: 0.8 }}
-              className="flex flex-col items-center gap-4"
+              className="flex flex-col items-center gap-6"
             >
-              <div className="flex items-center gap-4 w-full max-w-xs justify-center">
-                <div className="h-px flex-1 bg-gradient-to-r from-transparent to-[var(--theme-line)]" />
-                <span className="text-xs md:text-sm font-bold tracking-[0.3em] text-[var(--theme-primary)] uppercase opacity-80">
+              <div className="flex items-center gap-6 w-full max-w-sm justify-center">
+                <div className="h-px flex-1 bg-gradient-to-r from-transparent via-[var(--theme-line)] to-transparent" />
+                <span className="text-xs md:text-sm font-bold tracking-[0.4em] text-[var(--theme-primary)] uppercase opacity-80">
                   Chapter 22
                 </span>
-                <div className="h-px flex-1 bg-gradient-to-l from-transparent to-[var(--theme-line)]" />
+                <div className="h-px flex-1 bg-gradient-to-l from-transparent via-[var(--theme-line)] to-transparent" />
               </div>
-              <p className="text-xl md:text-3xl text-slate-500 font-medium italic opacity-70">
+              <p className="text-2xl md:text-4xl text-slate-500 font-medium italic opacity-60 font-handwriting">
                 (हे थोडं जास्त personal आहे...)
               </p>
             </motion.div>
@@ -485,70 +492,76 @@ export default function ExperienceController() {
         </motion.div>
 
         {/* 3D Wish Tree & Ledger Section */}
-        <motion.div 
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.8 }}
-          className="mb-32 w-full max-w-6xl mx-auto flex flex-col lg:flex-row items-center lg:items-stretch gap-8 relative z-20 px-4"
-        >
-          {/* Form Side */}
-          <div className="w-full lg:w-1/3 flex flex-col justify-center">
-            <form onSubmit={handleJoinTree} className="w-full text-left bg-white/60 backdrop-blur-xl p-6 md:p-8 rounded-[2rem] md:rounded-[2.5rem] shadow-2xl border border-white/60">
-              <h3 className="text-xl md:text-2xl font-black text-slate-900 mb-2">Guest Ledger</h3>
-              <p className="text-sm text-slate-500 mb-8 font-medium">(तुझं नाव इथे लिहून आठवण साठवून ठेव)</p>
-              
-              <div className="flex flex-col w-full gap-5 relative">
-                <div className="space-y-1.5">
-                  <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400 ml-2">Your Name</label>
-                  <input 
-                    type="text" 
-                    value={nameInput}
-                    onChange={(e) => setNameInput(e.target.value)}
-                    placeholder="Enter your name..." 
-                    required
-                    className="w-full bg-white/50 border border-white/60 rounded-2xl py-4 px-5 focus:outline-none focus:border-[var(--theme-primary)] focus:ring-4 focus:ring-[var(--theme-primary)]/10 text-slate-900 placeholder:text-slate-400 shadow-sm transition-all font-medium"
-                  />
-                </div>
+        <div className="mb-48 relative">
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-50/30 to-transparent -z-10 blur-3xl rounded-full" />
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.8 }}
+            className="w-full max-w-7xl mx-auto flex flex-col lg:flex-row items-center lg:items-stretch gap-12 relative z-20 px-4"
+          >
+            {/* Form Side */}
+            <div className="w-full lg:w-[35%] flex flex-col justify-center">
+              <form onSubmit={handleJoinTree} className="w-full text-left bg-white/70 backdrop-blur-3xl p-8 md:p-10 rounded-[3rem] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.1)] border border-white group transition-all duration-500 hover:shadow-[0_60px_120px_-25px_rgba(168,85,247,0.15)]">
+                <h3 className="text-2xl md:text-3xl font-black text-slate-900 mb-2">Guest Ledger</h3>
+                <p className="text-sm text-slate-400 mb-10 font-bold uppercase tracking-wider">(तुझं नाव इथे लिहून आठवण साठवून ठेव)</p>
                 
-                <div className="space-y-1.5">
-                  <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400 ml-2">Short Wish (Optional)</label>
-                  <textarea
-                    value={messageInput}
-                    onChange={(e) => setMessageInput(e.target.value)}
-                    placeholder="Leave a message..."
-                    className="w-full bg-white/50 border border-white/60 rounded-2xl py-4 px-5 focus:outline-none focus:border-[var(--theme-primary)] focus:ring-4 focus:ring-[var(--theme-primary)]/10 text-slate-900 placeholder:text-slate-400 shadow-sm resize-none h-32 transition-all font-handwriting text-xl"
-                  />
+                <div className="flex flex-col w-full gap-6 relative">
+                  <div className="space-y-2">
+                    <label className="text-[11px] font-black uppercase tracking-[0.2em] text-slate-400 ml-3">Your Name</label>
+                    <input 
+                      type="text" 
+                      value={nameInput}
+                      onChange={(e) => setNameInput(e.target.value)}
+                      placeholder="Enter your name..." 
+                      required
+                      className="w-full bg-slate-50/50 border-2 border-slate-100 rounded-[1.5rem] py-5 px-6 focus:outline-none focus:border-[var(--theme-primary)] focus:bg-white text-slate-900 placeholder:text-slate-300 shadow-sm transition-all font-bold text-lg"
+                    />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <label className="text-[11px] font-black uppercase tracking-[0.2em] text-slate-400 ml-3">Short Wish (Optional)</label>
+                    <textarea
+                      value={messageInput}
+                      onChange={(e) => setMessageInput(e.target.value)}
+                      placeholder="Leave a message..."
+                      className="w-full bg-slate-50/50 border-2 border-slate-100 rounded-[1.5rem] py-5 px-6 focus:outline-none focus:border-[var(--theme-primary)] focus:bg-white text-slate-900 placeholder:text-slate-300 shadow-sm resize-none h-40 transition-all font-handwriting text-2xl"
+                    />
+                  </div>
+
+                  <button 
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full bg-slate-900 text-white py-5 px-8 rounded-[1.5rem] text-lg font-black shadow-2xl hover:bg-[var(--theme-primary)] hover:-translate-y-2 active:translate-y-0 transition-all duration-300 disabled:opacity-50 mt-6 overflow-hidden relative group"
+                  >
+                    <span className="relative z-10">{isSubmitting ? 'Signing...' : 'Sign & Hang on Tree'}</span>
+                    <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </button>
                 </div>
+              </form>
+            </div>
 
-                <button 
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full bg-slate-900 text-white py-4 px-8 rounded-2xl text-base font-bold shadow-xl hover:bg-[var(--theme-primary)] hover:-translate-y-1 active:translate-y-0 transition-all disabled:opacity-50 mt-4"
-                >
-                  {isSubmitting ? 'Signing...' : 'Sign & Hang on Tree'}
-                </button>
+            {/* Tree Side */}
+            <div className="w-full lg:w-[65%] h-[500px] md:h-[600px] lg:h-[800px] relative">
+              <div className="absolute inset-0 bg-white/40 backdrop-blur-xl rounded-[4rem] border border-white shadow-2xl overflow-hidden">
+                <WishTree refreshTrigger={refreshKey} />
               </div>
-            </form>
-          </div>
-
-          {/* Tree Side */}
-          <div className="w-full lg:w-2/3 h-[400px] md:h-[500px] lg:h-[700px]">
-            <WishTree refreshTrigger={refreshKey} />
-          </div>
-        </motion.div>
+            </div>
+          </motion.div>
+        </div>
 
         {/* Fun Facts Section */}
         <LifeStats path={path} />
 
         {/* The Timeline Foundation */}
-        <div className="relative w-full pb-32">
-          <div className="absolute left-6 md:left-1/2 top-4 bottom-0 w-1 bg-slate-200/50 transform -translate-x-1/2 rounded-full" />
+        <div className="relative w-full pb-48">
+          <div className="absolute left-6 md:left-1/2 top-4 bottom-0 w-1.5 bg-slate-100 transform -translate-x-1/2 rounded-full" />
           <motion.div 
-            className="absolute left-6 md:left-1/2 top-4 bottom-0 w-1 bg-gradient-to-b from-[var(--theme-primary)] to-[var(--theme-secondary)] transform -translate-x-1/2 rounded-full origin-top"
+            className="absolute left-6 md:left-1/2 top-4 bottom-0 w-1.5 bg-gradient-to-b from-[var(--theme-primary)] via-[var(--theme-secondary)] to-purple-600 transform -translate-x-1/2 rounded-full origin-top"
             style={{ scaleY }}
           />
 
-          <div className="space-y-16 md:space-y-24">
+          <div className="space-y-24 md:space-y-32">
             {categoryParams.timeline.map((item, idx) => (
               <TimelineNode 
                 key={idx} 
@@ -581,24 +594,24 @@ export default function ExperienceController() {
             });
           }}
           transition={{ duration: 0.8 }}
-          className="mt-12 flex flex-col items-center bg-white/70 backdrop-blur-2xl rounded-[3rem] p-8 md:p-12 shadow-2xl border-4 border-white/50 text-center relative overflow-hidden"
+          className="mt-24 flex flex-col items-center bg-white/80 backdrop-blur-3xl rounded-[4rem] p-10 md:p-16 shadow-[0_60px_120px_-30px_rgba(0,0,0,0.15)] border-4 border-white text-center relative overflow-hidden"
         >
-          <div className="absolute top-0 left-1/2 w-1 h-12 bg-gradient-to-b from-[var(--theme-primary)] to-transparent transform -translate-x-1/2 hidden md:block" />
+          <div className="absolute top-0 left-1/2 w-1.5 h-16 bg-gradient-to-b from-[var(--theme-primary)] to-transparent transform -translate-x-1/2 hidden md:block" />
 
-          <p className="text-xs md:text-sm font-bold tracking-widest text-[var(--theme-primary)] uppercase mb-4 mt-2 md:mt-0">
+          <p className="text-[11px] md:text-sm font-black tracking-[0.4em] text-[var(--theme-primary)] uppercase mb-6 mt-4 md:mt-0 opacity-70">
             {greeting}
           </p>
           
-          <h1 className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-slate-900 tracking-tight leading-snug md:leading-tight mb-8 bg-clip-text text-transparent bg-gradient-to-br from-slate-900 to-[var(--theme-secondary)] max-w-2xl">
+          <h1 className="text-3xl sm:text-4xl md:text-6xl font-black text-slate-900 tracking-tight leading-snug md:leading-tight mb-12 bg-clip-text text-transparent bg-gradient-to-br from-slate-900 to-[var(--theme-secondary)] max-w-3xl">
             Having you in my life, <br className="hidden sm:block" />
             हीच माझ्यासाठी real gift आहे.
           </h1>
           
           <HandwrittenSignature />
           
-          <div className="w-full h-px bg-slate-200/50 my-8 max-w-sm" />
+          <div className="w-full h-px bg-slate-100 my-12 max-w-md" />
 
-          <div className="w-full max-w-sm flex flex-col items-center justify-center">
+          <div className="w-full max-w-md flex flex-col items-center justify-center scale-110">
             <AudioPlayer src={voiceClip} autoPlay={madeWish} />
           </div>
         </motion.div>

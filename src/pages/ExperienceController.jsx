@@ -259,7 +259,24 @@ export default function ExperienceController() {
     }
   }, [madeWish]);
 
-  const path = location.pathname.split('/').filter(Boolean)[0] || 'default';
+  // Detect category from Subdomain OR Path
+  const getCategory = () => {
+    const hostname = window.location.hostname; // e.g., friends.dhananjaykharkar.tech
+    const parts = hostname.split('.');
+    
+    // Check subdomain first (if not localhost or direct IP)
+    if (parts.length > 2) {
+      const subdomain = parts[0].toLowerCase();
+      if (['friends', 'family', 'special', 'relatives'].includes(subdomain)) {
+        return subdomain;
+      }
+    }
+
+    // Fallback to path (e.g., /friends)
+    return location.pathname.split('/').filter(Boolean)[0] || 'default';
+  };
+
+  const path = getCategory();
   const categoryParams = messages[path] || messages['default'];
   
   const greeting = getGreetingTime();
